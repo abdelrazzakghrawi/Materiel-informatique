@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Home{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .card-img-top {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="row my-5">
+        <div class="col-md-12">
+            <div class="my-3 d-flex justify-content-between align-items-center">
+                <button type="button" class="btn btn-dark position-relative">
+                    Product 
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        {{ products|length }}
+                        <span class="visually-hidden">product</span>
+                    </span>
+                </button>
+                <div> 
+                    <a href="{{ path('home') }}" class="btn btn-sm btn-outline-dark mx-1">
+                        All Product 
+                    </a>
+                    <a href="{{ path('home') }}" class="btn btn-sm btn-outline-dark mx-1 dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Category
+                    </a>
+                    <div class="dropdown-menu">
+                        {% for category in categories %}
+                            <a href="{{ path('product_category', {category: category.id}) }}" class="dropdown-item">{{ category.name }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                {% if products|length %}
+                    {% for product in products %}
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                {% if product.image %} 
+                                    <img src="{{ asset('uploads/' ~ product.image) }}" 
+                                         alt="{{ product.name }}" 
+                                      
+                                         class="card-img-top">
+                                {% else %}
+                                    <img src="{{ asset('uploads/error.png') }}" 
+                                         alt="{{ product.name }}" 
+                                        
+                                         class="card-img-top">
+                                {% endif %}
+                                
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ product.name }}</h5>
+                                    <p class="card-text">{{ product.description }}</p>
+                                    <h5><span class="text text-danger">{{ product.price }} DH</span></h5>
+                                    <a href="{{ path('product_show', {id: product.id}) }}" class="btn btn-primary">
+                                        View
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="alert alert-info">
+                        No product found!
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

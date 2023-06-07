@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} 
+    {{ product.name }}
+{% endblock %}
+
+{% block body %}
+    <div class="row my-5">
+        <div class="col-md-12">
+            <div class="my-3 d-flex justify-content-start align-items-center">
+                <div class="mr-auto">
+                    <a href="{{ path('order_store',{product:product.id}) }}" class="btn btn-sm btn-outline-dark mx-1">
+                        Order now
+                    </a>    
+                </div>
+            </div>
+            <div class="row">
+                {% if product %}
+                    <div class="col-md-6">
+                        <div class="card">
+                            {% if product.image %} 
+                                <img src="{{ asset('uploads/' ~ product.image) }}" 
+                                     alt="{{ product.name }}" 
+                                     class="card-img-top img-fluid">
+                            {% else %}
+                                <img src="{{ asset('uploads/error.png') }}" 
+                                     alt="{{ product.name }}" 
+                                     class="card-img-top img-fluid">
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ product.name }}</h5>
+                                <p class="card-text">{{ product.description }}</p>
+                                <h5><span class="text text-danger">{{ product.price }} DH</span></h5>
+                                <h5><span class="text text-success">{{ product.category.name }}</span></h5>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="col">
+                        <div class="alert alert-info">
+                            No product found!
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

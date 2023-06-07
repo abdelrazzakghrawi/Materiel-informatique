@@ -1,0 +1,14 @@
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute
+# config/routes.yaml
+home:
+    path: /
+    controller: App\Controller\HomeController::index
+
+user_order_list:
+    path: /user/orders/list
+    controller: App\Controller\OrderController::userOrders
+    methods: GET
